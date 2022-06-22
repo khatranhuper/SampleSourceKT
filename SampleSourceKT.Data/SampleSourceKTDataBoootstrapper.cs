@@ -19,9 +19,9 @@ namespace SampleSourceKT.Data
 {
     public static class SampleSourceKTDataBoootstrapper
     {
-        public static void RegisterServices(IServiceCollection services)
+        public static void RegisterServices(IServiceCollection services, IConfiguration Configuration)
         {
-            string conn = "Data Source=DESKTOP-NGEELHE\\MSSQLSERVER2019;Initial Catalog=SampleSourceKT;Integrated Security=True";
+            string conn = Configuration["ConnectionStrings:SampleSourceKTDatabase"];
             services.AddDbContext<SampleSourceKTDbContext>(options => options.UseSqlServer(conn), ServiceLifetime.Transient);
             services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<SampleSourceKTDbContext>().AddDefaultTokenProviders();
 

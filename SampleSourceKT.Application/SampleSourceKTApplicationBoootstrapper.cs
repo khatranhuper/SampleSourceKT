@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SampleSourceKT.Application.ApplicationServices;
 using SampleSourceKT.Application.Mapping;
@@ -16,7 +17,7 @@ namespace SampleSourceKT.Application
 {
     public static class SampleSourceKTApplicationBoootstrapper
     {
-        public static void RegisterServices(IServiceCollection services)
+        public static void RegisterServices(IServiceCollection services, IConfiguration Configuration)
         {
             //Mapper
             services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
@@ -28,7 +29,7 @@ namespace SampleSourceKT.Application
             services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
 
 
-            SampleSourceKTDataBoootstrapper.RegisterServices(services);
+            SampleSourceKTDataBoootstrapper.RegisterServices(services, Configuration);
         }
     }
 }

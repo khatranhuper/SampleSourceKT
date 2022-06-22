@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using SampleSourceKT.Api.Filtters;
 using SampleSourceKT.Application;
 using System.Collections.Generic;
 
@@ -26,9 +27,12 @@ namespace SampleSourceKT.Api
 
             //services.AddSingleton<InterfaceA, ClassA>();
 
-            services.AddControllers();
+            services.AddControllers(options =>
+            {
+                options.Filters.Add(typeof(HandleFilters)); // by type
+            });
 
-            SampleSourceKTApplicationBoootstrapper.RegisterServices(services);
+            SampleSourceKTApplicationBoootstrapper.RegisterServices(services, Configuration);
             //services.AddIdentity
             services.AddSwaggerGen(c =>
             {
@@ -86,7 +90,7 @@ namespace SampleSourceKT.Api
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
                     ClockSkew = System.TimeSpan.Zero,
-                    IssuerSigningKey = new SymmetricSecurityKey(signingKeyBytes)
+                    IssuerSigningKey = new SymmetricSecurityKey(signingKeyBytes),
                 };
             });
 
